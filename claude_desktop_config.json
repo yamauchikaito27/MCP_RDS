@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "awslabs.lambda-tool-mcp-server": {
+      "command": "awslabs.lambda-tool-mcp-server.exe",
+      "args": [
+        "awslabs.lambda-tool-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_PROFILE": "default",
+        "AWS_REGION": "ap-northeast-1",
+        "FUNCTION_PREFIX": "mcp-",
+        "FUNCTION_LIST": "mcp-greet,mcp-status",
+        "FUNCTION_TAG_KEY": "mcp-enabled",
+        "FUNCTION_TAG_VALUE": "true",
+        "DEBUG": "true"
+      }
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres:mypassword@localhost:5432/myapp_db"
+      ]
+    },
+    "awslabs.postgres-mcp-server": {
+          "type": "stdio",
+          "command": "wsl",
+          "args": [
+            "-d", "Ubuntu",
+            "bash", "/mnt/c/Users/kaito/AppData/Roaming/Claude/wait-for-docker-and-run.sh"
+          ],
+          "env": {
+            "AWS_PROFILE": "mcp-executor",
+            "AWS_REGION": "ap-northeast-1",
+            "FASTMCP_LOG_LEVEL": "ERROR"
+          }
+    }
+  }
+}
